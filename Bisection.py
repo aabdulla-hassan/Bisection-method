@@ -1,18 +1,43 @@
-%matplotlib inline
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.optimize import fsolve
+def bisectionMethod(function , a , b ):
+    faInterval = f(a)
+    fbInterval = f(b)
 
-def f(x): 
-    x**3 + 1
-    
-    def bisection(a,b,tol):
-        while(np.abs(a - b) >= tol):
-            c = (a + b) / 2.0
-            prod = a * c
-            if prod < tol: 
-              return c
+    if faInterval * fbInterval > 0:
+        print("f(a) and f(b) Must Be Different Signs To Find The root ")
+        return None
 
-        answer = bisection(-5,5,1e-10)
+    for _ in range(100): 
+        c = (a + b) / 2
+        fc = f(c)
 
-        print(answer)
+        if fc == 0:
+            return c
+        if faInterval * fc > 0:
+            a = c
+            faInterval = fc
+        if fbInterval * fc > 0:
+            b = c
+            fbInterval = fc
+
+    return c
+
+
+func = lambda x: x**2 - 2*x -1
+
+a = 2
+b = -2
+print(f"From : {a}")
+print(f"To : {b}")
+root= bisectionMethod(func, a, b)
+
+print(f"Solution   :  {root}")
+print("--------------------")
+a = 1
+b = 4
+
+print(f"From : {a}")
+print(f"To : {b}")
+
+root= bisectionMethod(func, a, b)
+
+print(f"Solution   :  {root}")
